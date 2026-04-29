@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elogic Mini Calculator</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 430px;
+      margin: auto;
+      background: #f7f7f7;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      padding: 18px;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      margin-bottom: 18px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #111;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 14px;
+    }
+
+    .result {
+      margin-top: 12px;
+      font-weight: bold;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Elogic Calculator</h1>
+
+  <div class="card">
+    <h2>Hedef Piksel Hesabı</h2>
+
+    <label>Hedef genişliği, m</label>
+    <input id="target" type="number" value="3">
+
+    <label>LOS mesafesi, m</label>
+    <input id="distance" type="number" value="5000">
+
+    <label>Yatay FOV, derece</label>
+    <input id="fov" type="number" value="5.2">
+
+    <label>Yatay çözünürlük, px</label>
+    <input id="resolution" type="number" value="640">
+
+    <button onclick="calculatePixel()">Hesapla</button>
+
+    <div id="pixelResult" class="result"></div>
+  </div>
+
+  <script>
+    function calculatePixel() {
+      const target = Number(document.getElementById("target").value);
+      const distance = Number(document.getElementById("distance").value);
+      const fov = Number(document.getElementById("fov").value);
+      const resolution = Number(document.getElementById("resolution").value);
+
+      const angularRad = target / distance;
+      const angularDeg = angularRad * 180 / Math.PI;
+      const pixel = angularDeg / fov * resolution;
+
+      document.getElementById("pixelResult").innerText =
+        "Açısal genişlik: " + angularDeg.toFixed(4) + " derece\n" +
+        "Görüntüde kapladığı alan: " + pixel.toFixed(2) + " px";
+    }
+  </script>
+
+</body>
+</html>
